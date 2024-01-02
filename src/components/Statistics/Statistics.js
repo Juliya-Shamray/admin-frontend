@@ -10,7 +10,7 @@ export const Statistics = ({ data }) => {
     <StyledDiv>
       <StyledTitle>STATISTICS</StyledTitle>
       <StyledText>
-        Total Bikes:<StyledSpan>{data.total}</StyledSpan>
+        Total Bikes: <StyledSpan>{data.total}</StyledSpan>
       </StyledText>
       <StyledText>
         Available Bikes: <StyledSpan>{data.available}</StyledSpan>

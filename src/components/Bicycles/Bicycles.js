@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   StyledButton,
   StyledLi,
@@ -11,11 +11,16 @@ import {
 import { getBicycles, removeDocument } from "../../services/api";
 import { SeletcStatus } from "../SelectStatus/SeletcStatus";
 
-export const Bicycles = ({ data, setData }) => {
-  const [bicycles, setBicycles] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
-
+export const Bicycles = ({ ...props }) => {
+  const {
+    loading,
+    setLoading,
+    bicycles,
+    setBicycles,
+    error,
+    setError,
+    setData,
+  } = props;
   useEffect(() => {
     const fetchSearch = async () => {
       setLoading(true);
@@ -30,17 +35,13 @@ export const Bicycles = ({ data, setData }) => {
       }
     };
     fetchSearch();
-  }, [setData]);
+  }, [setBicycles, setData, setError, setLoading]);
 
   const handleClick = (id) => {
     const fetchRemove = async () => {
       setLoading(true);
       try {
         await removeDocument(id);
-        // const updatedBicycles = bicycles.filter(
-        //   (bicycle) => bicycle._id !== id
-        // );
-        // setBicycles(updatedBicycles);
         const response = await getBicycles();
         setBicycles(response.data.data);
 
@@ -55,7 +56,6 @@ export const Bicycles = ({ data, setData }) => {
   };
   return (
     <>
-      {error && <h2>Something went wrong... Try again</h2>}
       <StyledList>
         {bicycles.length === 0 && !loading && !error && (
           <h2>There's nothing here yet</h2>
@@ -80,6 +80,9 @@ export const Bicycles = ({ data, setData }) => {
               </StyledButton>
             </StyledLi>
           ))}
+        {error && !loading && !bicycles.length && (
+          <h2>Something went wrong... Try again</h2>
+        )}
       </StyledList>
     </>
   );

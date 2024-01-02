@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
+  StyleError,
   StyleWrapButton,
   StyledButton,
   StyledDiv,
@@ -7,119 +8,135 @@ import {
   StyledInput,
   StyledTextArea,
   StyledWrap,
+  StyledDivErr,
 } from "./BicycleForm.styled";
+import { addDocument, getBicycles } from "../../services/api";
 
-export const BicycleForm = () => {
-  const [formData, setFormData] = useState({
-    id: 3,
-    name: "",
-    type: "",
-    color: "",
-    wheelSize: "",
-    price: "",
-    description: "",
-  });
+const positiveRegExp = /^[+]?\d*\.?\d+$/;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+const minLength = {
+  value: 5,
+  message: "Minimum length should be 5 characters",
+};
+
+const required = {
+  value: true,
+  message: "Field is empty ",
+};
+
+export const BicycleForm = ({ ...props }) => {
+  const { setLoading, setBicycles, setData, setError } = props;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const fetchAdd = async () => {
+      setLoading(true);
+      try {
+        await addDocument(data);
+        const response = await getBicycles();
+        setBicycles(response.data.data);
+
+        setData(response.data);
+      } catch (error) {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchAdd();
+    reset();
   };
 
   const handleClickClear = () => {
-    setFormData({
-      id: "",
-      name: "",
-      type: "",
-      color: "",
-      wheelSize: "",
-      price: "",
-      description: "",
-    });
+    reset();
   };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    //  const fetchRemove = async () => {
-    //    setLoading(true);
-    //    try {
-    //      await removeDocument(id);
-    //      const updatedBicycles = bicycles.filter((bicycle) => bicycle._id !== id);
-    //      setBicycles(updatedBicycles);
-    //    } catch (error) {
-    //      setError(error);
-    //    } finally {
-    //      setLoading(false);
-    //    }
-    //  };
-    //  fetchRemove();
-    //     console.log("Form data submitted:", formData);
-  };
-
   return (
-    <StyledForm onSubmit={handleSubmit}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <StyledDiv>
         <StyledInput
           placeholder="Name"
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
+          {...register("name", {
+            required,
+            minLength,
+            type: "text",
+          })}
         />
         <StyledInput
           placeholder="Type"
-          type="text"
-          name="type"
-          value={formData.type}
-          onChange={handleChange}
+          {...register("type", { required, minLength, type: "text" })}
         />
       </StyledDiv>
+      <StyledDivErr>
+        {errors.name && <StyleError>{errors.name.message}</StyleError>}
+        {errors.type && <StyleError>{errors.type.message}</StyleError>}
+      </StyledDivErr>
       <StyledDiv>
         <StyledInput
           placeholder="Color"
-          min={5}
-          type="text"
-          name="color"
-          value={formData.color}
-          onChange={handleChange}
+          {...register("color", { required, minLength, type: "text" })}
         />
+
         <StyledInput
           placeholder="Wheel size"
-          type="number"
-          name="wheelSize"
-          value={formData.wheelSize}
-          onChange={handleChange}
+          {...register("wheelSize", {
+            required,
+            pattern: {
+              value: positiveRegExp,
+              message: "Please enter a positive number.",
+            },
+            type: { value: "number", message: "Must be a number" },
+          })}
         />
       </StyledDiv>
+      <StyledDivErr>
+        {errors.color && <StyleError>{errors.color.message}</StyleError>}
+        {errors.wheelSize && (
+          <StyleError>{errors.wheelSize.message}</StyleError>
+        )}
+      </StyledDivErr>
       <StyledDiv>
         <StyledInput
           placeholder="Price"
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
+          {...register("price", {
+            pattern: {
+              value: positiveRegExp,
+              message: "Please enter a positive number.",
+            },
+            type: { value: "number", message: "Must be a number" },
+          })}
         />
         <StyledInput
           placeholder="ID"
-          type="text"
-          name="id"
-          value={formData.id}
-          onChange={handleChange}
+          {...register("id", { required, minLength, type: "text" })}
         />
       </StyledDiv>
+      <StyledDivErr>
+        {errors.price && <StyleError>{errors.price.message}</StyleError>}
+        {errors.id && <StyleError>{errors.id.message}</StyleError>}
+      </StyledDivErr>
+
       <StyledWrap>
         <StyledTextArea
           placeholder="Description"
-          type="text"
-          name="description"
-          value={formData.description}
-          onChange={handleChange}
+          {...register("description", {
+            required,
+            minLength,
+            type: "text",
+          })}
         />
+        {errors.description && (
+          <StyleError>{errors.description.message}</StyleError>
+        )}
       </StyledWrap>
       <StyleWrapButton>
-        <StyledButton type="submit">Save</StyledButton>
+        <StyledButton type="submit" disabled={!isValid}>
+          Save
+        </StyledButton>
         <StyledButton onClick={handleClickClear}>Clear</StyledButton>
       </StyleWrapButton>
     </StyledForm>

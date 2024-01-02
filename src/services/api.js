@@ -15,7 +15,7 @@ export const changeStatus = async (id, data) => {
 
 export const addDocument = async (data) => {
   const res = await axios.post(`/api/admin/add`, {
-    data,
+    ...data,
   });
   return res;
 };

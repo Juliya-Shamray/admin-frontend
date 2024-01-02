@@ -15,6 +15,7 @@ export const StyledForm = styled.form`
 export const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 11px;
   @media screen and (min-width: 768px) {
     flex-direction: row;
@@ -22,6 +23,7 @@ export const StyledDiv = styled.div`
 `;
 
 export const StyledInput = styled.input`
+  display: block;
   width: 100%;
   @media screen and (min-width: 768px) {
     width: 50%;
@@ -88,4 +90,15 @@ export const StyledButton = styled.button`
   @media screen and (min-width: 768px) {
     min-width: 235px;
   }
+`;
+
+export const StyleError = styled.p`
+  font-size: 13px;
+  color: red;
+  max-width: 235px;
+`;
+
+export const StyledDivErr = styled.div`
+  display: flex;
+  justify-content: space-between;
 `;

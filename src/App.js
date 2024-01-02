@@ -8,16 +8,32 @@ import { Footer } from "./components/Footer/Footer";
 
 function App() {
   const [data, setData] = useState([]);
-  console.log(data);
+  const [bicycles, setBicycles] = useState([]);
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   return (
     <>
       <Header />
       <StyledMain>
         <StyledWrap className="container">
-          <Bicycles data={data} setData={setData} />
+          <Bicycles
+            data={data}
+            setData={setData}
+            bicycles={bicycles}
+            setBicycles={setBicycles}
+            error={error}
+            setError={setError}
+            loading={loading}
+            setLoading={setLoading}
+          />
           <div>
-            <BicycleForm data={data} />
-            <Statistics data={data} />
+            <BicycleForm
+              data={data}
+              setLoading={setLoading}
+              setBicycles={setBicycles}
+              setError={setError}
+            />
+            <Statistics data={data} setData={setData} />
           </div>
         </StyledWrap>
       </StyledMain>
