@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledMain = styled.main`
   padding: 9px 12px;
-  flex-grow: 1;
+  flex-grow: 5;
 `;
 
 export const StyledWrap = styled.div`

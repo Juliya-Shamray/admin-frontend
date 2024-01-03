@@ -8,9 +8,10 @@ export const GlobalStyle = createGlobalStyle`
    font-weight:normal;
    display: flex;
    flex-direction: column;
-   height: 100vh;
+  
    &>div{display: flex;
-  flex-direction: column;}
+  flex-direction: column;
+ height: 100vh;}
    
    
 h1,

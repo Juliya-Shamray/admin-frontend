@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const StyledFooter = styled.footer`
   background-color: #696969;
   padding: 10px;
-  flex-grow: 0;
+  flex-grow: 1;
 `;
 
 export const StyledDiv = styled.div`
