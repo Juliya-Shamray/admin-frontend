@@ -36,33 +36,30 @@ export const Bicycles = ({ ...props }) => {
         {bicycles.length === 0 && !loading && !error && (
           <h2>There's nothing here yet</h2>
         )}
-        {bicycles.length > 0 &&
-          !loading &&
-          !error &&
-          bicycles.map((bicycle, ind) => (
-            <StyledLi key={`${bicycle._id}-${ind}`}>
-              <div>
-                <StyledTitle>
-                  <span>{bicycle.name}</span> - {bicycle.type}({bicycle.color})
-                </StyledTitle>
-                <StyledText>ID:{ind + 1}</StyledText>
-                <SelectStatus
-                  id={bicycle._id}
-                  statusBd={bicycle.status}
-                  bicycles={bicycles}
-                  setBicycles={setBicycles}
-                />
-              </div>
-              <StyledTextPr>{bicycle.price} UAH/hr</StyledTextPr>
-              <StyledButton
-                onClick={() => {
-                  handleClick(bicycle._id);
-                }}
-              >
-                <StyledSVGContainer alt="close icon" />
-              </StyledButton>
-            </StyledLi>
-          ))}
+        {bicycles.map((bicycle, ind) => (
+          <StyledLi key={`${bicycle._id}-${ind}`}>
+            <div>
+              <StyledTitle>
+                <span>{bicycle.name}</span> - {bicycle.type}({bicycle.color})
+              </StyledTitle>
+              <StyledText>ID:{ind + 1}</StyledText>
+              <SelectStatus
+                id={bicycle._id}
+                statusBd={bicycle.status}
+                bicycles={bicycles}
+                setBicycles={setBicycles}
+              />
+            </div>
+            <StyledTextPr>{bicycle.price} UAH/hr</StyledTextPr>
+            <StyledButton
+              onClick={() => {
+                handleClick(bicycle._id);
+              }}
+            >
+              <StyledSVGContainer alt="close icon" />
+            </StyledButton>
+          </StyledLi>
+        ))}
         {error && !loading && !bicycles.length && (
           <h2>Something went wrong... Try again</h2>
         )}

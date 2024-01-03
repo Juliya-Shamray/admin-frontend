@@ -6,6 +6,7 @@ import { Header } from "./components/Header/Header";
 import { Statistics } from "./components/Statistics/Statistics";
 import { Footer } from "./components/Footer/Footer";
 import { getBicycles } from "./services/api";
+import { Loader } from "./components/Loader/Loader";
 
 function App() {
   const [bicycles, setBicycles] = useState([]);
@@ -31,14 +32,17 @@ function App() {
       <Header />
       <StyledMain>
         <StyledWrap className="container">
-          <Bicycles
-            bicycles={bicycles}
-            setBicycles={setBicycles}
-            error={error}
-            setError={setError}
-            loading={loading}
-            setLoading={setLoading}
-          />
+          {loading && !error && <Loader />}
+          {bicycles.length > 0 && !loading && !error && (
+            <Bicycles
+              bicycles={bicycles}
+              setBicycles={setBicycles}
+              error={error}
+              setError={setError}
+              loading={loading}
+              setLoading={setLoading}
+            />
+          )}
           <div>
             <BicycleForm setBicycles={setBicycles} bicycles={bicycles} />
             <Statistics bicycles={bicycles} />
