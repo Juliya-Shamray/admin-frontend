@@ -31,7 +31,7 @@ export const Bicycles = ({ ...props }) => {
     fetchRemove();
   };
   return (
-    <>
+    <div>
       <StyledList>
         {bicycles.length === 0 && !loading && !error && (
           <h2>There's nothing here yet</h2>
@@ -64,6 +64,6 @@ export const Bicycles = ({ ...props }) => {
           <h2>Something went wrong... Try again</h2>
         )}
       </StyledList>
-    </>
+    </div>
   );
 };

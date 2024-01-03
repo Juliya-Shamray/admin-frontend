@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const StyledForm = styled.form`
-  @media screen and (min-width: 768px) {
-    width: 501px;
+  max-width: 400px;
+  @media screen and (min-width: 1152px) {
+    max-width: 501px;
   }
 
   padding: 10px;
@@ -41,8 +42,9 @@ export const StyledInput = styled.input`
   }
 `;
 export const StyledWrap = styled.div`
+  max-width: 481px;
   @media screen and (min-width: 768px) {
-    width: 481px;
+    max-width: 481px;
   }
 `;
 export const StyledTextArea = styled.textarea`
@@ -65,7 +67,7 @@ export const StyleWrapButton = styled.div`
   display: flex;
   flex-direction: column;
   gap: 11px;
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1152px) {
     flex-direction: row;
   }
 `;

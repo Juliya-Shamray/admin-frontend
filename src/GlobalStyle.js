@@ -6,9 +6,8 @@ export const GlobalStyle = createGlobalStyle`
    margin: 0 auto;    
    font-style: normal;
    font-weight:normal;
-   display: flex;
-   flex-direction: column;
-  
+
+  min-height: 100vh;
    &>div{display: flex;
   flex-direction: column;
  height: 100vh;}
