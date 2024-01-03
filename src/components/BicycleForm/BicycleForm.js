@@ -28,7 +28,8 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
+    trigger,
     reset,
   } = useForm();
 
@@ -62,10 +63,12 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
             minLength,
             type: "text",
           })}
+          onBlur={() => trigger("name")}
         />
         <StyledInput
           placeholder="Type"
           {...register("type", { required, minLength, type: "text" })}
+          onBlur={() => trigger("type")}
         />
       </StyledDiv>
       <StyledDivErr>
@@ -76,6 +79,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
         <StyledInput
           placeholder="Color"
           {...register("color", { required, minLength, type: "text" })}
+          onBlur={() => trigger("color")}
         />
 
         <StyledInput
@@ -88,6 +92,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
             },
             type: { value: "number", message: "Must be a number" },
           })}
+          onBlur={() => trigger("wheelSize")}
         />
       </StyledDiv>
       <StyledDivErr>
@@ -106,10 +111,12 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
             },
             type: { value: "number", message: "Must be a number" },
           })}
+          onBlur={() => trigger("price")}
         />
         <StyledInput
           placeholder="ID"
           {...register("id", { required, minLength, type: "text" })}
+          onBlur={() => trigger("id")}
         />
       </StyledDiv>
       <StyledDivErr>
@@ -125,15 +132,14 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
             minLength,
             type: "text",
           })}
+          onBlur={() => trigger("description")}
         />
         {errors.description && (
           <StyleError>{errors.description.message}</StyleError>
         )}
       </StyledWrap>
       <StyleWrapButton>
-        <StyledButton type="submit" disabled={!isValid}>
-          Save
-        </StyledButton>
+        <StyledButton type="submit">Save</StyledButton>
         <StyledButton onClick={handleClickClear}>Clear</StyledButton>
       </StyleWrapButton>
     </StyledForm>
