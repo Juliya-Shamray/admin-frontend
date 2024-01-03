@@ -39,7 +39,7 @@ export const Bicycles = ({ ...props }) => {
           <h2>There's nothing here yet</h2>
         )}
         {bicycles.map((bicycle, ind) => (
-          <StyledLi key={`${bicycle._id}-${ind}`}>
+          <StyledLi $status={bicycle.status} key={`${bicycle._id}-${ind}`}>
             <div>
               <StyledTitle>
                 <span>{bicycle.name}</span> - {bicycle.type}({bicycle.color})

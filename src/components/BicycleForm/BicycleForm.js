@@ -56,73 +56,81 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <StyledDiv>
-        <StyledInput
-          placeholder="Name"
-          {...register("name", {
-            required,
-            minLength,
-            type: "text",
-          })}
-          onBlur={() => trigger("name")}
-        />
-        <StyledInput
-          placeholder="Type"
-          {...register("type", { required, minLength, type: "text" })}
-          onBlur={() => trigger("type")}
-        />
+        <div>
+          <StyledInput
+            placeholder="Name"
+            {...register("name", {
+              required,
+              minLength,
+              type: "text",
+            })}
+            onBlur={() => trigger("name")}
+          />
+          {errors.name && <StyleError>{errors.name.message}</StyleError>}
+        </div>
+        <div>
+          <StyledInput
+            placeholder="Type"
+            {...register("type", { required, minLength, type: "text" })}
+            onBlur={() => trigger("type")}
+          />
+          {errors.type && <StyleError>{errors.type.message}</StyleError>}
+        </div>
       </StyledDiv>
-      <StyledDivErr>
-        {errors.name && <StyleError>{errors.name.message}</StyleError>}
-        {errors.type && <StyleError>{errors.type.message}</StyleError>}
-      </StyledDivErr>
-      <StyledDiv>
-        <StyledInput
-          placeholder="Color"
-          {...register("color", { required, minLength, type: "text" })}
-          onBlur={() => trigger("color")}
-        />
 
-        <StyledInput
-          placeholder="Wheel size"
-          {...register("wheelSize", {
-            required,
-            pattern: {
-              value: positiveRegExp,
-              message: "Please enter a positive number.",
-            },
-            type: { value: "number", message: "Must be a number" },
-          })}
-          onBlur={() => trigger("wheelSize")}
-        />
-      </StyledDiv>
-      <StyledDivErr>
-        {errors.color && <StyleError>{errors.color.message}</StyleError>}
-        {errors.wheelSize && (
-          <StyleError>{errors.wheelSize.message}</StyleError>
-        )}
-      </StyledDivErr>
       <StyledDiv>
-        <StyledInput
-          placeholder="Price"
-          {...register("price", {
-            pattern: {
-              value: positiveRegExp,
-              message: "Please enter a positive number.",
-            },
-            type: { value: "number", message: "Must be a number" },
-          })}
-          onBlur={() => trigger("price")}
-        />
-        <StyledInput
-          placeholder="ID"
-          {...register("id", { required, minLength, type: "text" })}
-          onBlur={() => trigger("id")}
-        />
+        <div>
+          <StyledInput
+            placeholder="Color"
+            {...register("color", { required, minLength, type: "text" })}
+            onBlur={() => trigger("color")}
+          />
+          {errors.color && <StyleError>{errors.color.message}</StyleError>}
+        </div>
+        <div>
+          <StyledInput
+            placeholder="Wheel size"
+            {...register("wheelSize", {
+              required,
+              pattern: {
+                value: positiveRegExp,
+                message: "Please enter a positive number.",
+              },
+              type: { value: "number", message: "Must be a number" },
+            })}
+            onBlur={() => trigger("wheelSize")}
+          />
+          {errors.wheelSize && (
+            <StyleError>{errors.wheelSize.message}</StyleError>
+          )}
+        </div>
       </StyledDiv>
-      <StyledDivErr>
-        {errors.price && <StyleError>{errors.price.message}</StyleError>}
-        {errors.id && <StyleError>{errors.id.message}</StyleError>}
-      </StyledDivErr>
+
+      <StyledDiv>
+        <div>
+          <StyledInput
+            placeholder="Price"
+            {...register("price", {
+              pattern: {
+                value: positiveRegExp,
+                message: "Please enter a positive number.",
+              },
+              type: { value: "number", message: "Must be a number" },
+            })}
+            onBlur={() => trigger("price")}
+          />
+          {errors.price && <StyleError>{errors.price.message}</StyleError>}
+        </div>
+
+        <div>
+          <StyledInput
+            placeholder="ID"
+            {...register("id", { required, minLength, type: "text" })}
+            onBlur={() => trigger("id")}
+          />
+          {errors.id && <StyleError>{errors.id.message}</StyleError>}
+        </div>
+      </StyledDiv>
 
       <StyledWrap>
         <StyledTextArea

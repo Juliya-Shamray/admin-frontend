@@ -2,36 +2,29 @@ import styled from "styled-components";
 
 export const StyledForm = styled.form`
   max-width: 400px;
-  @media screen and (min-width: 1152px) {
-    max-width: 501px;
-  }
-
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
   border-bottom: 1px solid #c4c4c4;
+  gap: 10px;
+  @media screen and (min-width: 1152px) {
+    max-width: 501px;
+  }
 `;
 
 export const StyledDiv = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  gap: 11px;
-  @media screen and (min-width: 768px) {
+  gap: 10px;
+  @media screen and (min-width: 1152px) {
     flex-direction: row;
+    gap: 11px;
   }
 `;
 
 export const StyledInput = styled.input`
-  display: block;
-  width: 100%;
-  @media screen and (min-width: 768px) {
-    width: 50%;
-  }
-
+  width: 235px;
   padding: 5px 16px;
-  max-width: 235px;
   border-radius: 5px;
   background: #e8e8e8;
   border: none;

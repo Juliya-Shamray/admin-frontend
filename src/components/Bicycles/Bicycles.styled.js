@@ -28,6 +28,10 @@ export const StyledLi = styled.li`
 
   position: relative;
 
+  ${({ $status }) => $status === "busy" && ` border-color: #F2994A; `}
+  ${({ $status }) => $status === "unavailable" && ` border-color: #EB5757; `}
+
+
   @media screen and (min-width: 768px) {
     max-width: 618px;
     flex-direction: row;
