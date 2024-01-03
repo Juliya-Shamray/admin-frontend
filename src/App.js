@@ -45,7 +45,9 @@ function App() {
           )}
           <div>
             <BicycleForm setBicycles={setBicycles} bicycles={bicycles} />
-            <Statistics bicycles={bicycles} />
+            {bicycles.length > 0 && !loading && !error && (
+              <Statistics bicycles={bicycles} />
+            )}
           </div>
         </StyledWrap>
       </StyledMain>

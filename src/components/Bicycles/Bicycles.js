@@ -9,6 +9,7 @@ import {
 } from "./Bicycles.styled";
 import { removeDocument } from "../../services/api";
 import { SelectStatus } from "../SelectStatus/SelectStatus";
+import { toast } from "react-toastify";
 
 export const Bicycles = ({ ...props }) => {
   const { loading, setLoading, bicycles, setBicycles, error, setError } = props;
@@ -21,6 +22,7 @@ export const Bicycles = ({ ...props }) => {
         const updatedBicycles = bicycles.filter(
           (bicycle) => bicycle._id !== id
         );
+        toast.success("Note deleted successfully");
         setBicycles(updatedBicycles);
       } catch (error) {
         setError(error);

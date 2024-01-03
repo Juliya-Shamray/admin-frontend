@@ -11,6 +11,7 @@ import {
   StyledDivErr,
 } from "./BicycleForm.styled";
 import { addDocument } from "../../services/api";
+import { toast } from "react-toastify";
 
 const positiveRegExp = /^[+]?\d*\.?\d+$/;
 
@@ -34,14 +35,13 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const bikeDataWithStatus = { ...data, status: "available" };
-    const updatedBicycles = [...bicycles, bikeDataWithStatus];
-
-    setBicycles(updatedBicycles);
-
     const fetchAdd = async () => {
       try {
-        await addDocument(data);
+        const res = await addDocument(data);
+        setBicycles((prevBicycles) => [...prevBicycles, res.data]);
+        toast.success("New bike added successfully", {
+          position: "top-right",
+        });
       } catch (error) {
         console(error);
       }
