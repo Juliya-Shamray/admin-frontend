@@ -8,7 +8,6 @@ import {
   StyledInput,
   StyledTextArea,
   StyledWrap,
-  StyledDivErr,
 } from "./BicycleForm.styled";
 import { addDocument } from "../../services/api";
 import { toast } from "react-toastify";
@@ -20,18 +19,14 @@ const minLength = {
   message: "Minimum length should be 5 characters",
 };
 
-const required = {
-  value: true,
-  message: "Field is empty ",
-};
-
-export const BicycleForm = ({ setBicycles, bicycles }) => {
+export const BicycleForm = ({ setBicycles }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     trigger,
     reset,
+    clearErrors,
   } = useForm();
 
   const onSubmit = (data) => {
@@ -51,6 +46,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
   };
 
   const handleClickClear = () => {
+    clearErrors();
     reset();
   };
   return (
@@ -60,7 +56,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
           <StyledInput
             placeholder="Name"
             {...register("name", {
-              required,
+              required: true,
               minLength,
               type: "text",
             })}
@@ -71,7 +67,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
         <div>
           <StyledInput
             placeholder="Type"
-            {...register("type", { required, minLength, type: "text" })}
+            {...register("type", { required: true, minLength, type: "text" })}
             onBlur={() => trigger("type")}
           />
           {errors.type && <StyleError>{errors.type.message}</StyleError>}
@@ -82,7 +78,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
         <div>
           <StyledInput
             placeholder="Color"
-            {...register("color", { required, minLength, type: "text" })}
+            {...register("color", { required: true, minLength, type: "text" })}
             onBlur={() => trigger("color")}
           />
           {errors.color && <StyleError>{errors.color.message}</StyleError>}
@@ -91,7 +87,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
           <StyledInput
             placeholder="Wheel size"
             {...register("wheelSize", {
-              required,
+              required: true,
               pattern: {
                 value: positiveRegExp,
                 message: "Please enter a positive number.",
@@ -125,7 +121,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
         <div>
           <StyledInput
             placeholder="ID"
-            {...register("id", { required, minLength, type: "text" })}
+            {...register("id", { required: true, minLength, type: "text" })}
             onBlur={() => trigger("id")}
           />
           {errors.id && <StyleError>{errors.id.message}</StyleError>}
@@ -136,7 +132,7 @@ export const BicycleForm = ({ setBicycles, bicycles }) => {
         <StyledTextArea
           placeholder="Description"
           {...register("description", {
-            required,
+            required: true,
             minLength,
             type: "text",
           })}

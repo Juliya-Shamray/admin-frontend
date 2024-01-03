@@ -92,8 +92,3 @@ export const StyleError = styled.p`
   color: red;
   max-width: 235px;
 `;
-
-export const StyledDivErr = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
