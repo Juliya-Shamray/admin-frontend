@@ -10,7 +10,7 @@ import {
   StyledWrap,
   StyledDivErr,
 } from "./BicycleForm.styled";
-import { addDocument, getBicycles } from "../../services/api";
+import { addDocument } from "../../services/api";
 
 const positiveRegExp = /^[+]?\d*\.?\d+$/;
 
@@ -24,8 +24,7 @@ const required = {
   message: "Field is empty ",
 };
 
-export const BicycleForm = ({ ...props }) => {
-  const { setLoading, setBicycles, setData, setError } = props;
+export const BicycleForm = ({ setBicycles, bicycles }) => {
   const {
     register,
     handleSubmit,
@@ -34,18 +33,16 @@ export const BicycleForm = ({ ...props }) => {
   } = useForm();
 
   const onSubmit = (data) => {
+    const bikeDataWithStatus = { ...data, status: "available" };
+    const updatedBicycles = [...bicycles, bikeDataWithStatus];
+
+    setBicycles(updatedBicycles);
+
     const fetchAdd = async () => {
-      setLoading(true);
       try {
         await addDocument(data);
-        const response = await getBicycles();
-        setBicycles(response.data.data);
-
-        setData(response.data);
       } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
+        console(error);
       }
     };
     fetchAdd();

@@ -2,8 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import { StyledSelect, StyledSpan } from "../Bicycles/Bicycles.styled";
 import { changeStatus } from "../../services/api";
 
-export const SeletcStatus = ({ id, statusBd }) => {
-  const statusBD = statusBd.charAt(0).toUpperCase() + statusBd.slice(1);
+export const SelectStatus = ({ id, statusBd, bicycles, setBicycles }) => {
+  const statusBD = statusBd?.charAt(0).toUpperCase() + statusBd?.slice(1);
 
   const isInitialRender = useRef(true);
   const [status, setStatus] = useState(statusBD);
@@ -27,6 +27,10 @@ export const SeletcStatus = ({ id, statusBd }) => {
   const handleChange = (e) => {
     const { value } = e.target;
     setStatus(value);
+    const updateStatusLocal = bicycles.map((bike) =>
+      bike._id === id ? { ...bike, status: value.toLowerCase() } : bike
+    );
+    setBicycles(updateStatusLocal);
   };
 
   return (

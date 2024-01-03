@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   StyledButton,
   StyledLi,
@@ -8,44 +7,21 @@ import {
   StyledTextPr,
   StyledTitle,
 } from "./Bicycles.styled";
-import { getBicycles, removeDocument } from "../../services/api";
-import { SeletcStatus } from "../SelectStatus/SeletcStatus";
+import { removeDocument } from "../../services/api";
+import { SelectStatus } from "../SelectStatus/SelectStatus";
 
 export const Bicycles = ({ ...props }) => {
-  const {
-    loading,
-    setLoading,
-    bicycles,
-    setBicycles,
-    error,
-    setError,
-    setData,
-  } = props;
-  useEffect(() => {
-    const fetchSearch = async () => {
-      setLoading(true);
-      try {
-        const response = await getBicycles();
-        setBicycles(response.data.data);
-        setData(response.data);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchSearch();
-  }, [setBicycles, setData, setError, setLoading]);
+  const { loading, setLoading, bicycles, setBicycles, error, setError } = props;
 
   const handleClick = (id) => {
     const fetchRemove = async () => {
       setLoading(true);
       try {
         await removeDocument(id);
-        const response = await getBicycles();
-        setBicycles(response.data.data);
-
-        setData(response.data);
+        const updatedBicycles = bicycles.filter(
+          (bicycle) => bicycle._id !== id
+        );
+        setBicycles(updatedBicycles);
       } catch (error) {
         setError(error);
       } finally {
@@ -61,14 +37,21 @@ export const Bicycles = ({ ...props }) => {
           <h2>There's nothing here yet</h2>
         )}
         {bicycles.length > 0 &&
+          !loading &&
+          !error &&
           bicycles.map((bicycle, ind) => (
-            <StyledLi key={bicycle._id}>
+            <StyledLi key={`${bicycle._id}-${ind}`}>
               <div>
                 <StyledTitle>
                   <span>{bicycle.name}</span> - {bicycle.type}({bicycle.color})
                 </StyledTitle>
                 <StyledText>ID:{ind + 1}</StyledText>
-                <SeletcStatus id={bicycle._id} statusBd={bicycle.status} />
+                <SelectStatus
+                  id={bicycle._id}
+                  statusBd={bicycle.status}
+                  bicycles={bicycles}
+                  setBicycles={setBicycles}
+                />
               </div>
               <StyledTextPr>{bicycle.price} UAH/hr</StyledTextPr>
               <StyledButton
